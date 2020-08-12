@@ -10,14 +10,18 @@ def get_anchor_location():
             continue
         return anchor_location
 
+cell_size = -1
+board_size = (-1, -1)
+
+def get_board_info():
+    return (cell_size, board_size)
+
 def get_cell_locations():
+    global cell_size, board_size
     EASY_NUM, MED_NUM, HARD_NUM = 32, 111, 219 # the number of intersections for each difficulty
     EASY_SIZE = (10, 8)
     MED_SIZE = (18, 14)
     HARD_SIZE = (24, 20)
-
-    cell_size = -1
-    board_size = (-1, -1)
 
     intersections = list(pyautogui.locateAllOnScreen("intersect.png"))
 
@@ -30,13 +34,13 @@ def get_cell_locations():
         mx_y = max(mx_y, i.top + i.height)
 
     if(len(intersections) == EASY_NUM):
-        cell_size = 50
+        cell_size = 45
         board_size = EASY_SIZE
     elif(len(intersections) == MED_NUM):
         cell_size = 30
         board_size = MED_SIZE
     elif(len(intersections) == HARD_NUM):
-        cell_Size = 15
+        cell_size = 25
         board_size = HARD_SIZE
     else:
         print("Invalid number of intersects found!!!")
@@ -49,7 +53,3 @@ def get_cell_locations():
             rtn_pos[i].append((mi_x + (j*cell_size), mi_y + (i*cell_size)))
 
     return rtn_pos
-
-cell_pos = get_cell_locations()
-
-
